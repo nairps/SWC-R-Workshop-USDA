@@ -1,0 +1,50 @@
+# Producing Reports With knitr
+
+RMarkDown reference can be accessed from [here](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf).
+    
+
+```{r, eval=FALSE}
+This is a how a header for RMarkdown file looks like:
+
+---
+title: "RMarkdown demo"
+author: "Author name"
+date: "7/23/2020"
+output: html_document
+---
+```
+
+
+### Adding Citation
+The bibliography may have any of these formats.
+
+
+```{r table-1, echo=FALSE}
+format <- c(
+  "CSL-JSON", "MODS", "BibLaTeX", "BibTeX",
+  "RIS", "EndNote", "EndNote XML", "ISI", "MEDLINE"
+)
+file.extension <- c(
+  ".json", ".mods", ".bib", ".bibtex",
+  ".ris", ".enl", ".xml", ".wos", ".medline"
+)
+
+knitr::kable(
+  data.frame(format, file.extension),
+  caption = "Bibliography formats that can be used with RMarkdown"
+)
+```
+
+
+This is how you do some inline code: 2 + 2 = `r 2+2`.
+
+
+
+You can do subscripts (e.g., F~2~) with F~2~ and superscripts (e.g., F^2^) with F^2^.
+
+If you know how to write equations in LaTeX, you can use $ $ and $$ $$ to insert math equations, like $E = mc^2$ 
+
+
+
+
+```

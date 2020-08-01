@@ -1,0 +1,35 @@
+# `dplyr`
+
+`dplyr` is one of the `R` libraries that implements functions for manipulating dataframes. 
+
+      
+**Advantages of using `dplyr` compared to base R**
+
+ - functions (verbs) are easier to read
+ - reduce repetition
+ - reduce the probability of making errors
+ - saves typing 
+ - **can combine functions using pipes (%>%)**
+  
+    
+**dplyr verbs:**
+
+- `select()`: select variables (columns); (subsetting columns)  
+- `filter()`: choose data based on values; (subsetting rows)
+- `summarize()`: provide summary for the grouped dataframes
+- `mutate()`:  create new variables
+- `arrange()`: order the rows
+- `group_by()`: create grouped dataframes
+
+
+**Note**: The order of operations is very important in **`dplyr`** 
+
+See the episode on `dplyr` from the [SWC lesson](http://swcarpentry.github.io/r-novice-gapminder/13-dplyr/index.html) for the code snippets that we used in the workshop. See also the `dplyr` documentation from the [`tidyverse` website](https://dplyr.tidyverse.org).
+
+
+For more help on `dplyr`, use the vignette for the same from `RStudio` or `R` like shown below.
+```{r eval=FALSE}
+vignette("dplyr")
+```
+
+

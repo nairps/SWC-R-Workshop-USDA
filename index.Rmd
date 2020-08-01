@@ -1,0 +1,53 @@
+--- 
+title: "SWC R Workshop @ USDA: Notes and Code"
+author: "Preethy Nair"
+date: "July 23, 2020"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "This is a supplementary note for the SWC worshop at the USDA. The output format is bookdown::gitbook."
+---
+
+# Information
+
+This is a supplementary notebook for the online SWC R workshop at the USDA on July 23, 2020. The notebook includes the code that was used during workshop and notes based on the Carpentries R lesson, [R for Reproducbile data analyis](https://swcarpentry.github.io/r-novice-gapminder/).
+
+Please see the [course website](https://nairps.github.io/2020-07-22-usda-online/) to access other lessons we covered for the workshop. The workshop notes for other sessions are provided in the [collaborative document](https://pad.carpentries.org/2020-07-22-usda-online).  
+
+
+Summary of yesterday's `R` lessons are also provided in the same [collaborative note](https://pad.carpentries.org/2020-07-22-usda-online).
+
+To get help for a function in `R`, we can use `help`.
+
+```{r eval=FALSE}
+help("%in%") # value matching
+help("c")  # combine function
+help("%>%") # pipe operator
+help("<-") # assignment operator
+help("-") # arithmetic operator
+```
+
+
+## Prerequisites
+To participate in this workshop session on **R**, you need to install **R**, **RStudio** and some packages from `R` [@R-base] (`dplyr` [@R-dplyr], `tidyr`[@R-tidyr], `knitr` [@R-knitr; @xie2015]).
+Please see the [course website](https://nairps.github.io/2020-07-22-usda-online/) for instructions to install `R` and `RStudio`. 
+Once you have **R** installed on your computers, the packages required for this session can be installed using the below commands.
+
+```{r eval=FALSE}
+install.packages(c("dplyr", "tidyr", "knitr"))
+# or individually
+install.packages("dplyr")
+install.packages("tidyr")
+install.packages("knitr")
+```
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown', 'dplyr', 'tidyr'
+), 'packages.bib')
+```

@@ -1,0 +1,466 @@
+# Functions
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+**Functions**
+
+ - are the basic building block of most programming languages
+ - are used to gather a sequence of operations into a whole, preserving it for ongoing use.
+ - have names that we can remember and call 
+ - have a defined set of inputs and expected outputs 
+ - provide connections to the larger programming environment
+
+
+We can repeat several operations with a single function call.
+
+There are 2 types of functions:
+
+ 1. built-in functions
+ 2. user-defined functions
+
+
+Below are some of the built-in functions from **base R**.
+
+```{r, eval=FALSE}
+log()
+mean()
+min()
+sd()
+```
+
+ 
+
+
+
+User-defined functions are created in **R** using the keyword __function__. See below regarding how to get help for writing functions in **R**.
+
+
+
+```{r keyword-function}
+?"function"
+```
+
+
+
+## Components of a function
+Below presented are the components of a function:
+
+a. name
+b. arguments/inputs - within parentheses -()
+c. body - within curly braces - {}
+      - statements that are executed when it runs
+
+The statements in the body are indented by two spaces as a good practice for writing `R` code. A function is called in `R` by providing the function name with the arguments in parenthesis, like shown below.
+
+
+```{r eval=FALSE}
+# defining a function
+function_name <- function(arguments){
+    body
+}
+
+# this is how we call or use a function
+function_name(arguments)
+```
+
+
+Let’s define a function `fahr_to_kelvin()` that converts 
+temperatures from Fahrenheit to Kelvin:
+
+
+```{r, fahr_to_kelvin}
+fahr_to_kelvin <- function(temperature) {
+    kelvin <- ((temperature - 32) * (5 / 9)) + 273.15
+    return(kelvin)
+}
+```
+
+Run the above code chunk on your RStudio console. 
+
+Next, check if you have executed the code chunk by going through the `History` tab of the top right panel on your RStudio window. 
+You can also make sure that the function named `fahr_to_kelvin` is available for you to use by searching the **RStudio** `Environment`. From the top right panel of your RStudio window, go the tab `Environment` and search for the function `fahr_to_kelvin` under the Function names.
+
+Lets try using our function to convert the freezing point of water from Fahrenheit to kelvin. Freezing point of water is 0 °C or 32 °F.
+
+
+```{r fahr_to_kelvin-1}
+fahr_to_kelvin(32)
+```
+
+
+Next, use the same function to convert the boiling point of
+water from Fahrenheit to Kelvin. Note that the boiling point of water is 100 °C (212 °F).
+
+```{r fahr_to_kelvin_bp}
+fahr_to_kelvin(212)
+```
+
+
+
+## Challenge 1
+Write a function called kelvin_to_celsius() that takes a temperature in Kelvin & converts that to temperature in Celsius.
+
+To convert from Kelvin to Celsius you subtract 273.15
+
+Reference: http://swcarpentry.github.io/r-novice-gapminder/10-functions/index.html
+
+```{r challenge-1, eval=FALSE}
+kelvin_to_celsius <- function(temp) {
+    .....
+    return(celsius)
+}
+```
+
+
+
+**Solution**
+```{r challenge-1-solution}
+kelvin_to_celsius <- function(temp) {
+    celsius <- temp - 273.15
+    return(celsius)
+}
+```
+
+
+## Combining functions
+
+We have already defined two functions:
+
+1. `fahr_to_kelvin()`  - converts from Fahrenheit to Kelvin
+2. `kelvin_to_celsius()` - converts from Kelvin to Celsius
+
+See if they are available in your global environment of RStudio.
+
+
+The real power of functions comes from mixing, 
+matching and combining them into ever-larger chunks
+to get the effect we want.
+
+
+Lets try to understand how to combine functions.
+
+We will define a third function to convert directly from 
+Fahrenheit to Celsius, by reusing the two functions above.
+Let the name of third function be `fahr_to_celsius()`
+
+- input: temperature in Fahrenheit
+- expected output: temperature in Celsius
+
+
+We are going to accomplish this in 3 steps:
+
+1. Convert Fahrenheit to Kelvin : `fahr_to_kelvin()`
+2. Convert Kelvin from Step1 to Celsius: `kelvin_to_celsius()`
+3. Return the above result at the end of the function
+
+```{r combining-functions}
+fahr_to_celsius <- function(temp) {
+    temp_k <- fahr_to_kelvin(temp)
+    result <- kelvin_to_celsius(temp_k)
+    return(result)
+}
+
+# or can nest functions like this
+fahr_to_celsius_2 <- function(temp) {
+    temp_c <- kelvin_to_celsius(fahr_to_kelvin(temp))
+    return(temp_c)
+}
+```
+
+Lets try to convert the boiling and freezing point of
+water from Fahrenheit to Celsius. First, make sure all the three functions are available in your global environment.
+
+Call your combined function for the above mentioned conversions as shown below 
+```{r using-combined-function}
+fahr_to_celsius(212) # boiling point of water
+fahr_to_celsius(32) # freezing point of water
+```
+
+
+
+
+
+## Defensive Programming
+- Checking function parameters
+-  writing functions provides an efficient way to make R code
+  re-usable and modular
+
+-  it is important to ensure that functions only work in their
+    intended use-cases. 
+
+   - frequently check function parameters using conditions
+     and throw an error if something is wrong. 
+  
+   - These checks are referred to as assertion statements because 
+     we want to assert some condition is TRUE before proceeding. 
+
+  -  make it easier to debug because they give us a better idea of 
+     where the errors originate.
+
+ - How to use assertion in `R` ?
+       - we can tell `R` to stop executing the function using stop()
+
+
+
+
+### Case 1: Functions with one argument
+We can create conditions with `stopifnot()`. Let’s start by re-examining `fahr_to_kelvin()`.
+
+- Here, we know that the argument `temp` must be a `numeric`
+      - Otherwise, the mathematical operations used in the temperature conversions will not work. 
+- Hence, we check this with an `if` statement and `stop()` 
+if the condition is violated
+
+```{r testing-is-numeric}
+is.numeric("TRUE")
+is.numeric(TRUE)
+is.numeric(2)
+```
+
+
+```{r defensive-fahr_to_kelvin}
+fahr_to_kelvin <- function(temp) {
+    if (!is.numeric(temp)) {
+        stop("temp must be a numeric vector.")
+    }
+    kelvin <- ((temp - 32) * (5 / 9)) + 273.15
+    return(kelvin)
+}
+```
+
+### Case 2: Multiple arguments or conditions
+  - Use `stopifnot()` for type-assertion
+  - works in the same way as `stop()`
+  - shorter syntax
+  - throws an error if it finds a condition that is `FALSE`. 
+
+Here is the code for defensive programming with `stopifnot()`
+
+```{r}
+fahr_to_kelvin_stopifnot <- function(temp) {
+    stopifnot(is.numeric(temp))
+    kelvin <- ((temp - 32) * (5 / 9)) + 273.15
+    return(kelvin)
+}
+```
+
+**Note**
+  - We can list as many conditions that should evaluate to `TRUE`
+  - Secondary purpose: extra documentation for the function.
+
+Lets try checking the impact of the newly added assertions
+on our function `fahr_to_kelvin()`.
+
+- Check the Global environment
+
+If you type your function name without parenthesis, R will print out the code for your function.
+```{r }
+fahr_to_kelvin_stopifnot
+```
+
+
+
+**Freezing point of water**
+
+```{r }
+fahr_to_kelvin(temp = 32)
+fahr_to_kelvin_stopifnot(temp = 32)
+```
+
+
+Let's convert the number `32` to the type `factor` using the function `as.factor()`. This is an example of a type coercion that we saw on day 1 of the R lesson.
+```{r}
+as.factor(32)
+```
+
+
+The metric is a factor instead of numeric
+
+```{r eval=FALSE}
+fahr_to_kelvin(temp = as.factor(32))
+fahr_to_kelvin_stopifnot(temp = as.factor(32))
+```
+Both functions still works when given proper input.
+But fails instantly if given improper input.
+
+
+
+
+We will define a function `calcGDP()` that calculates the Gross Domestic Product of a nation from the `gapminder` dataset that we used in the chapter `Vectorisation`.
+
+`calcGDP` takes a dataset and multiplies the population column
+`pop` with the GDP per capita column `gdpPercap` to get the GDP.
+
+
+```{r calcGDP}
+head(gapminder)
+
+calcGDP <- function(dat) {
+    gdp <- dat$pop * dat$gdpPercap
+    return(gdp)
+}
+```
+
+
+
+Lets see what this function returns when applied to a part of the gapminder data.
+```{r}
+calcGDP(head(gapminder))
+```
+
+
+As we want our results to be more informative than the above, let's add some more arguments so we can extract per year and country GDP. We can also apply 
+1. defensive programming &
+2. default values for the arguments
+
+```{r, calcGDP-defensive-default}
+calcGDP <- function(dat, year=NULL, country=NULL) {
+    if(!is.null(year)) {
+        dat <- dat[dat$year %in% year, ]
+    }
+    if (!is.null(country)) {
+        dat <- dat[dat$country %in% country,]
+    }
+    gdp <- dat$pop * dat$gdpPercap
+    
+    new <- cbind(dat, gdp=gdp)
+    # modified gapminder with a gdp column
+    return(new)
+}
+```
+Explanation of what the function `calcGDP` does:
+
+i) subsets the provided data by year if the year argument isn’t empty
+ii) subsets the result by country if the country argument isn’t empty. 
+iii) calculates the GDP for the resultant subset
+iv) adds the GDP as a new column to the subsetted data
+v) returns the subsetted data (if year or/and country was present in the input dataframe) with a gdp column added as the final result. 
+
+
+**Note**: Implementing defensive programming can make our functions more flexible for later use. 
+
+
+We can use it to calculate the GDP for:
+     
+- The whole dataset;
+- A single year;
+- A single country;
+- A single combination of year and country.
+
+By using %in% instead, we can also give multiple years or countries to those arguments. Please see help for `%in%` which we covered yesterday using the below functions:
+
+```{r}
+help("%in%")
+?"%in%"
+```
+
+
+
+
+Let’s take a look at what happens when we specify the year:
+
+```{r}
+head(calcGDP(gapminder, year = 2007))
+```
+
+Or for a specific country:
+```{r}
+calcGDP(gapminder, country="Australia")
+```
+
+
+
+
+
+
+Let's do Challenges 4 & 5
+
+Reference: http://swcarpentry.github.io/r-novice-gapminder/10-functions/index.html
+
+
+## Challenge 4
+
+Test out your GDP function by calculating the GDP for New Zealand in 1987. How does this differ from New Zealand’s GDP in 1952?
+
+```{r solution-frame-work, eval=FALSE}
+calcGDP(gapminder, year = ..., country = ..)
+```
+
+
+
+```{r}
+# see if you get any results with these options. If you don't get results, can you tell why ?
+calcGDP(gapminder, year = 1952, country = "Newzealand")
+calcGDP(gapminder, year = 1952, country = "NewZealand")
+calcGDP(gapminder, year = 1952, country = "New Zealand")
+```
+
+
+
+
+## Challenge 5
+
+Write a function called fence() that takes two vectors as arguments, called text and wrapper, and prints out the text wrapped with the wrapper:
+
+The paste() function, we learned yesterday, can be used to combine text together. See below.
+
+```{r paste-function-demo}
+best_practice <- c("Write", "programs", "for", "people", "not", "computers")
+paste(best_practice, collapse=" ")
+```
+
+Let the argument `text` be `best_practice` and `wrapper` be `****`. The frame for the function is given below. You can try completing this.
+
+
+```{r, eval=FALSE }
+fence <- function(text, wrapper){
+    ...
+    ....
+    return(result)
+}
+# calling the function
+fence(text=.., wrapper=..)
+```
+
+
+
+
+
+
+**Solution**
+
+
+```{r, challenge-5-solution}
+fence <- function(text, wrapper){
+    text <- c(wrapper, text, wrapper)
+    result <- paste(text, collapse = " ")
+    return(result)
+}
+
+best_practice <- c("Write", "programs", "for", "people", "not", "computers")
+fence(text=best_practice, wrapper="***")
+```
+
+
+
+## How to use functions for later analyses
+
+1. Save functions to a file: e.g.: "functions.R"
+2. Use it in another R script by using the `source()` function
+    - `source("~/functions/functions.R")`
+
+
+## Other important concepts
+- Pass by value
+- Function scope
+- Testing and documenting
+
+
+
+    
+
+
+

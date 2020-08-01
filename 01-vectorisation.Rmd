@@ -1,0 +1,213 @@
+# Vectorization
+Most of R's functions are vectorized.
+
+ - These functions will operate on all elements of a vector at once
+  - No need to loop through and act on each element one at a time
+ 
+**Advantages of vectorisation**
+We can write code that is:
+
+  - concise 
+  - easy to read and
+  - less error prone.
+
+e.g.
+```{r vectorisation-multiplication}
+x <- 1:4
+x
+x * 2   
+```
+
+Above, each element of the vector was multiplied by 2.  
+Lets see how vectorisation works while adding two vectors in `R`.
+
+
+```{r vectorisation-add-two-vectors}
+y <- 6:9
+y
+x + y
+```
+Here, each element of `x` was added to its corresponding 
+element of `y`. Lets see that again:
+
+```{r}
+x; y; x+y
+
+```
+
+Another way to implement vectorisation while adding two vectors together is by using a `for` loop.
+
+
+## Structure of a `for()` loop
+```{r eval=FALSE}
+for (iterator in set_of_values) {
+         do a thing
+     } 
+```
+ - indentation is not important in R compared to Shell and Python
+ - but its a good practice to use indentation
+
+**Uses of for() loop**
+
+ - repeating operations
+ 
+ 
+**Example of a for loop** 
+```{r for-loop}
+for (i in 1:10) {
+    print(i)
+}
+```
+
+
+`for()` loop is good for iterating over a set of values, when the order of iteration is important. We saw `for()` loop yesterday.
+
+Its good to learn for() loops, but avoid using for() loops unless the order of iteration is important. 
+
+Here's an example of a for loop that does vector addition.
+
+```{r vect-addition-for-loop}
+x
+y
+#vectorisation using for loop
+output_vector <- c()
+for (i in 1:4) {
+    output_vector[i] <- x[i] + y[i]
+}
+output_vector
+```
+
+
+Compare this to the output using vectorised operations.
+```{r}
+x
+y
+sum_xy <- x + y
+sum_xy
+
+identical(output_vector, sum_xy)
+```
+
+Both are identical.
+
+
+Let's try Vectorisation in gapminder data. 
+Let's load the gapminder data that we used yesterday in the first part of our R lesson. 
+
+
+
+You can clear your environment for a fresh start by removing all the objects using the below command.
+
+```{r}
+rm(list = ls())
+```
+Please import the `gapminder` data to your `RStudio` environment. If you do not have the `gapminder` loaded into your RStudio session, you can do it using the below code chunk. This code chunk is also provided in the [collaborative document](https://pad.carpentries.org/2020-07-22-usda-online).
+
+
+```{r loading-gapminder-data}
+# loading data using a link
+gapminder <- read.csv("https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/gh-pages/_episodes_rmd/data/gapminder_data.csv", stringsAsFactors=FALSE)
+
+# if the gapminder is already in your data folder
+# you can load it using the below code:
+#gapminder <- read.csv("data/gapminder_data.csv", stringsAsFactors=FALSE)
+```
+
+
+
+Examine the gapminder dataset.
+
+```{r}
+head(gapminder)  # shows the first few rows of the dataset
+tail(gapminder)  # shows the last few rows of the dataset
+```
+
+Lets  try vectorisation on the `pop` column of the `gapminder` dataset.
+
+ 1. Make a new column in the `gapminder` data frame that
+ contains population in units of millions of people.
+
+ 2. Check the head or tail of the data frame to make sure
+ it worked.
+
+```{r}
+
+gapminder$pop_millions <- gapminder["pop"] / 1e6
+#or
+gapminder$pop_millions_2 <- gapminder$pop / 1e6
+# or
+gapminder["pop_millions_3"] <- gapminder$pop / 1e6
+```
+
+Check the head or tail of the data frame to make sure
+it worked.
+```{r}
+head(gapminder)
+```
+
+
+```{r}
+# check if both the created variables are identical or not
+# using the R function identical()
+identical(gapminder$pop_millions, gapminder$pop_millions_2 )
+```
+
+
+In addition to mathematical operators, Comparison operators, logical operators & many functions are also vectorized:
+
+
+Let's see the **Comparison operators**
+
+```{r}
+x <- 0:6
+x
+x > 2 
+```
+
+**Logical operators**
+```{r}
+a <- x > 3  # or, for clarity, a <- (x > 3)
+a
+```
+
+
+
+**Functions**
+`log()`
+```{r}
+x
+x <- 1:4
+x
+log(x)
+```
+
+
+
+**Vectorisation in matrices**
+Vectorized operations work element-wise on matrices.
+
+```{r}
+m <- matrix(1:12, nrow=3, ncol=4)
+m
+m * -1 # element wise operation
+
+m
+m ^ -1 # element wise operation
+```
+
+
+
+**Very important:**
+
+  - the operator `*` = > element-wise multiplication
+  - for matrix multiplication, use the `%*%` operator
+```{r}
+m
+matrix(1, nrow=4, ncol=1)
+
+m %*% matrix(1, nrow=4, ncol=1)
+
+matrix(1:4, nrow=1) #row matrix
+matrix(1:4, nrow=1) %*% matrix(1:4, ncol=1)
+```
+

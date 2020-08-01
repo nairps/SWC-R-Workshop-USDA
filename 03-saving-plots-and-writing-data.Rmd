@@ -1,0 +1,100 @@
+# Saving plots and Writing data
+
+## Saving plots in RStudio
+
+i. **`ggsave()`**
+```{r}
+library(ggplot2)
+```
+
+
+```{r eval=FALSE}
+ggplot(data=gapminder,
+       aes(x=year, y=lifeExp, colour=country)) +
+    geom_line() +
+    theme(legend.position = "none")
+ggsave("PlotName.pdf")
+```
+
+ii. **Export from RStudio**
+  - Make your plot in the RStudio
+  - Go to the lower right panel 
+  - Select the tab `Plots`
+  - Select the options for export from the drop-down menu
+    - Save as image or Save as pdf  or Copy to clipboard
+
+iii. **Plotting devices**
+
+Plotting devices can be used in the `R` and `RStudio` to save plots. We can control the size and resolution of the plots to be saved using arguments to the plotting devices. One such plotting device is `pdf`. The below code chunk can be used to save the `ggplot` as a `pdf` file with the specified height and width.
+
+
+
+```{r eval=FALSE}
+pdf("Life_Exp_vs_time.pdf", width=12, height=4)
+ggplot(data=gapminder,
+       aes(x=year, y=lifeExp, colour=country)) +
+    geom_line() +
+    theme(legend.position = "none")
+
+# Make sure to turn off the pdf device.
+# Else, the plot won't be saved.
+dev.off()
+```
+
+`jpeg`, `png`, `tiff` etc. are other plotting devices available in `R` to save plots. They can be called with arguments similar to the `pdf()`. 
+
+```{r eval=FALSE}
+jpeg(..)
+png(..)
+tiff(..)
+```
+
+## Writing Table
+
+We can use the `write.table()` function for writing tables, similar to `read.table()` we used for importing data.
+
+We can select the gapminder data for Australia and write it to a table.
+
+```{r subset-and-write-table}
+# create a directory named cleaned-data if its not there
+if(!dir.exists("./cleaned-data")){
+  dir.create("cleaned-data")
+}
+#subset the data
+aust_subset <- gapminder[gapminder$country == "Australia",]
+#write the data
+write.table(aust_subset,
+    file="cleaned-data/gapminder-aus.csv",
+    sep=","
+)
+```
+Lets use the **`Terminal`** tab on the lower left panel of the RStudio and check
+the data.
+
+```{r eval=FALSE}
+head cleaned-data/gapminder-aus.csv
+```
+For help on the `write.table` function, use the `help` function.
+
+```{r}
+help(write.table)
+```
+
+Lets use additional arguments for the `write.table` function so that quotes are not present for the values (option `quotes=FALSE`) and row names are not written to the cleaned file.
+
+```{r}
+write.table(
+    gapminder[gapminder$country == "Australia",],
+    file="cleaned-data/gapminder-aus.csv",
+    sep=",", quote=FALSE, row.names=FALSE
+)
+```
+
+Lets use the RStudio **`Terminal`** again and examine the cleaned file.
+```{r, eval=FALSE}
+# note - this command is for using on the Terminal window
+# and not on the RStudio console
+head cleaned-data/gapminder-aus.csv
+```
+
+
