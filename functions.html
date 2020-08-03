@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Functions | SWC R Workshop @ USDA: Notes and Code</title>
+  <meta name="description" content="This is a supplementary note for the SWC worshop at the USDA. The output format is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Functions | SWC R Workshop @ USDA: Notes and Code" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a supplementary note for the SWC worshop at the USDA. The output format is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Functions | SWC R Workshop @ USDA: Notes and Code" />
+  
+  <meta name="twitter:description" content="This is a supplementary note for the SWC worshop at the USDA. The output format is bookdown::gitbook." />
+  
+
+<meta name="author" content="Preethy Nair" />
+
+
+<meta name="date" content="2020-07-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="vectorization.html"/>
+<link rel="next" href="saving-plots-and-writing-data.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R Workshop USDA: Workshop Notes and Codes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Information</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="vectorization.html"><a href="vectorization.html"><i class="fa fa-check"></i><b>2</b> Vectorization</a><ul>
+<li class="chapter" data-level="2.1" data-path="vectorization.html"><a href="vectorization.html#structure-of-a-for-loop"><i class="fa fa-check"></i><b>2.1</b> Structure of a <code>for()</code> loop</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>3</b> Functions</a><ul>
+<li class="chapter" data-level="3.1" data-path="functions.html"><a href="functions.html#components-of-a-function"><i class="fa fa-check"></i><b>3.1</b> Components of a function</a></li>
+<li class="chapter" data-level="3.2" data-path="functions.html"><a href="functions.html#challenge-1"><i class="fa fa-check"></i><b>3.2</b> Challenge 1</a></li>
+<li class="chapter" data-level="3.3" data-path="functions.html"><a href="functions.html#combining-functions"><i class="fa fa-check"></i><b>3.3</b> Combining functions</a></li>
+<li class="chapter" data-level="3.4" data-path="functions.html"><a href="functions.html#defensive-programming"><i class="fa fa-check"></i><b>3.4</b> Defensive Programming</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="functions.html"><a href="functions.html#case-1-functions-with-one-argument"><i class="fa fa-check"></i><b>3.4.1</b> Case 1: Functions with one argument</a></li>
+<li class="chapter" data-level="3.4.2" data-path="functions.html"><a href="functions.html#case-2-multiple-arguments-or-conditions"><i class="fa fa-check"></i><b>3.4.2</b> Case 2: Multiple arguments or conditions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="functions.html"><a href="functions.html#challenge-4"><i class="fa fa-check"></i><b>3.5</b> Challenge 4</a></li>
+<li class="chapter" data-level="3.6" data-path="functions.html"><a href="functions.html#challenge-5"><i class="fa fa-check"></i><b>3.6</b> Challenge 5</a></li>
+<li class="chapter" data-level="3.7" data-path="functions.html"><a href="functions.html#how-to-use-functions-for-later-analyses"><i class="fa fa-check"></i><b>3.7</b> How to use functions for later analyses</a></li>
+<li class="chapter" data-level="3.8" data-path="functions.html"><a href="functions.html#other-important-concepts"><i class="fa fa-check"></i><b>3.8</b> Other important concepts</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="saving-plots-and-writing-data.html"><a href="saving-plots-and-writing-data.html"><i class="fa fa-check"></i><b>4</b> Saving plots and Writing data</a><ul>
+<li class="chapter" data-level="4.1" data-path="saving-plots-and-writing-data.html"><a href="saving-plots-and-writing-data.html#saving-plots-in-rstudio"><i class="fa fa-check"></i><b>4.1</b> Saving plots in RStudio</a></li>
+<li class="chapter" data-level="4.2" data-path="saving-plots-and-writing-data.html"><a href="saving-plots-and-writing-data.html#writing-table"><i class="fa fa-check"></i><b>4.2</b> Writing Table</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>5</b> <code>dplyr</code></a></li>
+<li class="chapter" data-level="6" data-path="producing-reports-with-knitr.html"><a href="producing-reports-with-knitr.html"><i class="fa fa-check"></i><b>6</b> Producing Reports With knitr</a><ul>
+<li class="chapter" data-level="6.0.1" data-path="producing-reports-with-knitr.html"><a href="producing-reports-with-knitr.html#adding-citation"><i class="fa fa-check"></i><b>6.0.1</b> Adding Citation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SWC R Workshop @ USDA: Notes and Code</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="functions" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Functions</h1>
+<p><strong>Functions</strong></p>
+<ul>
+<li>are the basic building block of most programming languages</li>
+<li>are used to gather a sequence of operations into a whole, preserving it for ongoing use.</li>
+<li>have names that we can remember and call</li>
+<li>have a defined set of inputs and expected outputs</li>
+<li>provide connections to the larger programming environment</li>
+</ul>
+<p>We can repeat several operations with a single function call.</p>
+<p>There are 2 types of functions:</p>
+<ol style="list-style-type: decimal">
+<li>built-in functions</li>
+<li>user-defined functions</li>
+</ol>
+<p>Below are some of the built-in functions from <strong>base R</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>()
+<span class="kw">mean</span>()
+<span class="kw">min</span>()
+<span class="kw">sd</span>()</code></pre></div>
+<p>User-defined functions are created in <strong>R</strong> using the keyword <strong>function</strong>. See below regarding how to get help for writing functions in <strong>R</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?<span class="st">&quot;function&quot;</span></code></pre></div>
+<div id="components-of-a-function" class="section level2">
+<h2><span class="header-section-number">3.1</span> Components of a function</h2>
+<p>Below presented are the components of a function:</p>
+<ol style="list-style-type: lower-alpha">
+<li>name</li>
+<li>arguments/inputs - within parentheses -()</li>
+<li>body - within curly braces - {}
+<ul>
+<li>statements that are executed when it runs</li>
+</ul></li>
+</ol>
+<p>The statements in the body are indented by two spaces as a good practice for writing <code>R</code> code. A function is called in <code>R</code> by providing the function name with the arguments in parenthesis, like shown below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># defining a function</span>
+function_name &lt;-<span class="st"> </span><span class="cf">function</span>(arguments){
+    body
+}
+
+<span class="co"># this is how we call or use a function</span>
+<span class="kw">function_name</span>(arguments)</code></pre></div>
+<p>Let’s define a function <code>fahr_to_kelvin()</code> that converts temperatures from Fahrenheit to Kelvin:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fahr_to_kelvin &lt;-<span class="st"> </span><span class="cf">function</span>(temperature) {
+    kelvin &lt;-<span class="st"> </span>((temperature <span class="op">-</span><span class="st"> </span><span class="dv">32</span>) <span class="op">*</span><span class="st"> </span>(<span class="dv">5</span> <span class="op">/</span><span class="st"> </span><span class="dv">9</span>)) <span class="op">+</span><span class="st"> </span><span class="fl">273.15</span>
+    <span class="kw">return</span>(kelvin)
+}</code></pre></div>
+<p>Run the above code chunk on your RStudio console.</p>
+<p>Next, check if you have executed the code chunk by going through the <code>History</code> tab of the top right panel on your RStudio window. You can also make sure that the function named <code>fahr_to_kelvin</code> is available for you to use by searching the <strong>RStudio</strong> <code>Environment</code>. From the top right panel of your RStudio window, go the tab <code>Environment</code> and search for the function <code>fahr_to_kelvin</code> under the Function names.</p>
+<p>Lets try using our function to convert the freezing point of water from Fahrenheit to kelvin. Freezing point of water is 0 °C or 32 °F.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fahr_to_kelvin</span>(<span class="dv">32</span>)</code></pre></div>
+<pre><code>## [1] 273.15</code></pre>
+<p>Next, use the same function to convert the boiling point of water from Fahrenheit to Kelvin. Note that the boiling point of water is 100 °C (212 °F).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fahr_to_kelvin</span>(<span class="dv">212</span>)</code></pre></div>
+<pre><code>## [1] 373.15</code></pre>
+</div>
+<div id="challenge-1" class="section level2">
+<h2><span class="header-section-number">3.2</span> Challenge 1</h2>
+<p>Write a function called kelvin_to_celsius() that takes a temperature in Kelvin &amp; converts that to temperature in Celsius.</p>
+<p>To convert from Kelvin to Celsius you subtract 273.15</p>
+<p>Reference: <a href="http://swcarpentry.github.io/r-novice-gapminder/10-functions/index.html" class="uri">http://swcarpentry.github.io/r-novice-gapminder/10-functions/index.html</a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kelvin_to_celsius &lt;-<span class="st"> </span><span class="cf">function</span>(temp) {
+    .....
+    <span class="kw">return</span>(celsius)
+}</code></pre></div>
+<p><strong>Solution</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">kelvin_to_celsius &lt;-<span class="st"> </span><span class="cf">function</span>(temp) {
+    celsius &lt;-<span class="st"> </span>temp <span class="op">-</span><span class="st"> </span><span class="fl">273.15</span>
+    <span class="kw">return</span>(celsius)
+}</code></pre></div>
+</div>
+<div id="combining-functions" class="section level2">
+<h2><span class="header-section-number">3.3</span> Combining functions</h2>
+<p>We have already defined two functions:</p>
+<ol style="list-style-type: decimal">
+<li><code>fahr_to_kelvin()</code> - converts from Fahrenheit to Kelvin</li>
+<li><code>kelvin_to_celsius()</code> - converts from Kelvin to Celsius</li>
+</ol>
+<p>See if they are available in your global environment of RStudio.</p>
+<p>The real power of functions comes from mixing, matching and combining them into ever-larger chunks to get the effect we want.</p>
+<p>Lets try to understand how to combine functions.</p>
+<p>We will define a third function to convert directly from Fahrenheit to Celsius, by reusing the two functions above. Let the name of third function be <code>fahr_to_celsius()</code></p>
+<ul>
+<li>input: temperature in Fahrenheit</li>
+<li>expected output: temperature in Celsius</li>
+</ul>
+<p>We are going to accomplish this in 3 steps:</p>
+<ol style="list-style-type: decimal">
+<li>Convert Fahrenheit to Kelvin : <code>fahr_to_kelvin()</code></li>
+<li>Convert Kelvin from Step1 to Celsius: <code>kelvin_to_celsius()</code></li>
+<li>Return the above result at the end of the function</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fahr_to_celsius &lt;-<span class="st"> </span><span class="cf">function</span>(temp) {
+    temp_k &lt;-<span class="st"> </span><span class="kw">fahr_to_kelvin</span>(temp)
+    result &lt;-<span class="st"> </span><span class="kw">kelvin_to_celsius</span>(temp_k)
+    <span class="kw">return</span>(result)
+}
+
+<span class="co"># or can nest functions like this</span>
+fahr_to_celsius_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="cf">function</span>(temp) {
+    temp_c &lt;-<span class="st"> </span><span class="kw">kelvin_to_celsius</span>(<span class="kw">fahr_to_kelvin</span>(temp))
+    <span class="kw">return</span>(temp_c)
+}</code></pre></div>
+<p>Lets try to convert the boiling and freezing point of water from Fahrenheit to Celsius. First, make sure all the three functions are available in your global environment.</p>
+<p>Call your combined function for the above mentioned conversions as shown below</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fahr_to_celsius</span>(<span class="dv">212</span>) <span class="co"># boiling point of water</span></code></pre></div>
+<pre><code>## [1] 100</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fahr_to_celsius</span>(<span class="dv">32</span>) <span class="co"># freezing point of water</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="defensive-programming" class="section level2">
+<h2><span class="header-section-number">3.4</span> Defensive Programming</h2>
+<ul>
+<li>Checking function parameters</li>
+<li><p>writing functions provides an efficient way to make R code re-usable and modular</p></li>
+<li><p>it is important to ensure that functions only work in their intended use-cases.</p></li>
+<li><p>frequently check function parameters using conditions and throw an error if something is wrong.</p></li>
+<li><p>These checks are referred to as assertion statements because we want to assert some condition is TRUE before proceeding.</p></li>
+<li><p>make it easier to debug because they give us a better idea of where the errors originate.</p></li>
+<li>How to use assertion in <code>R</code> ?
+<ul>
+<li>we can tell <code>R</code> to stop executing the function using stop()</li>
+</ul></li>
+</ul>
+<div id="case-1-functions-with-one-argument" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> Case 1: Functions with one argument</h3>
+<p>We can create conditions with <code>stopifnot()</code>. Let’s start by re-examining <code>fahr_to_kelvin()</code>.</p>
+<ul>
+<li>Here, we know that the argument <code>temp</code> must be a <code>numeric</code>
+<ul>
+<li>Otherwise, the mathematical operations used in the temperature conversions will not work.</li>
+</ul></li>
+<li>Hence, we check this with an <code>if</code> statement and <code>stop()</code> if the condition is violated</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.numeric</span>(<span class="st">&quot;TRUE&quot;</span>)</code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.numeric</span>(<span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.numeric</span>(<span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fahr_to_kelvin &lt;-<span class="st"> </span><span class="cf">function</span>(temp) {
+    <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.numeric</span>(temp)) {
+        <span class="kw">stop</span>(<span class="st">&quot;temp must be a numeric vector.&quot;</span>)
+    }
+    kelvin &lt;-<span class="st"> </span>((temp <span class="op">-</span><span class="st"> </span><span class="dv">32</span>) <span class="op">*</span><span class="st"> </span>(<span class="dv">5</span> <span class="op">/</span><span class="st"> </span><span class="dv">9</span>)) <span class="op">+</span><span class="st"> </span><span class="fl">273.15</span>
+    <span class="kw">return</span>(kelvin)
+}</code></pre></div>
+</div>
+<div id="case-2-multiple-arguments-or-conditions" class="section level3">
+<h3><span class="header-section-number">3.4.2</span> Case 2: Multiple arguments or conditions</h3>
+<ul>
+<li>Use <code>stopifnot()</code> for type-assertion</li>
+<li>works in the same way as <code>stop()</code></li>
+<li>shorter syntax</li>
+<li>throws an error if it finds a condition that is <code>FALSE</code>.</li>
+</ul>
+<p>Here is the code for defensive programming with <code>stopifnot()</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fahr_to_kelvin_stopifnot &lt;-<span class="st"> </span><span class="cf">function</span>(temp) {
+    <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(temp))
+    kelvin &lt;-<span class="st"> </span>((temp <span class="op">-</span><span class="st"> </span><span class="dv">32</span>) <span class="op">*</span><span class="st"> </span>(<span class="dv">5</span> <span class="op">/</span><span class="st"> </span><span class="dv">9</span>)) <span class="op">+</span><span class="st"> </span><span class="fl">273.15</span>
+    <span class="kw">return</span>(kelvin)
+}</code></pre></div>
+<p><strong>Note</strong> - We can list as many conditions that should evaluate to <code>TRUE</code> - Secondary purpose: extra documentation for the function.</p>
+<p>Lets try checking the impact of the newly added assertions on our function <code>fahr_to_kelvin()</code>.</p>
+<ul>
+<li>Check the Global environment</li>
+</ul>
+<p>If you type your function name without parenthesis, R will print out the code for your function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fahr_to_kelvin_stopifnot</code></pre></div>
+<pre><code>## function(temp) {
+##     stopifnot(is.numeric(temp))
+##     kelvin &lt;- ((temp - 32) * (5 / 9)) + 273.15
+##     return(kelvin)
+## }</code></pre>
+<p><strong>Freezing point of water</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fahr_to_kelvin</span>(<span class="dt">temp =</span> <span class="dv">32</span>)</code></pre></div>
+<pre><code>## [1] 273.15</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fahr_to_kelvin_stopifnot</span>(<span class="dt">temp =</span> <span class="dv">32</span>)</code></pre></div>
+<pre><code>## [1] 273.15</code></pre>
+<p>Let's convert the number <code>32</code> to the type <code>factor</code> using the function <code>as.factor()</code>. This is an example of a type coercion that we saw on day 1 of the R lesson.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.factor</span>(<span class="dv">32</span>)</code></pre></div>
+<pre><code>## [1] 32
+## Levels: 32</code></pre>
+<p>The metric is a factor instead of numeric</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fahr_to_kelvin</span>(<span class="dt">temp =</span> <span class="kw">as.factor</span>(<span class="dv">32</span>))
+<span class="kw">fahr_to_kelvin_stopifnot</span>(<span class="dt">temp =</span> <span class="kw">as.factor</span>(<span class="dv">32</span>))</code></pre></div>
+<p>Both functions still works when given proper input. But fails instantly if given improper input.</p>
+<p>We will define a function <code>calcGDP()</code> that calculates the Gross Domestic Product of a nation from the <code>gapminder</code> dataset that we used in the chapter <code>Vectorisation</code>.</p>
+<p><code>calcGDP</code> takes a dataset and multiplies the population column <code>pop</code> with the GDP per capita column <code>gdpPercap</code> to get the GDP.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(gapminder)</code></pre></div>
+<pre><code>##       country year      pop continent lifeExp gdpPercap       pop
+## 1 Afghanistan 1952  8425333      Asia  28.801  779.4453  8.425333
+## 2 Afghanistan 1957  9240934      Asia  30.332  820.8530  9.240934
+## 3 Afghanistan 1962 10267083      Asia  31.997  853.1007 10.267083
+## 4 Afghanistan 1967 11537966      Asia  34.020  836.1971 11.537966
+## 5 Afghanistan 1972 13079460      Asia  36.088  739.9811 13.079460
+## 6 Afghanistan 1977 14880372      Asia  38.438  786.1134 14.880372
+##   pop_millions_2 pop_millions_3
+## 1       8.425333       8.425333
+## 2       9.240934       9.240934
+## 3      10.267083      10.267083
+## 4      11.537966      11.537966
+## 5      13.079460      13.079460
+## 6      14.880372      14.880372</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calcGDP &lt;-<span class="st"> </span><span class="cf">function</span>(dat) {
+    gdp &lt;-<span class="st"> </span>dat<span class="op">$</span>pop <span class="op">*</span><span class="st"> </span>dat<span class="op">$</span>gdpPercap
+    <span class="kw">return</span>(gdp)
+}</code></pre></div>
+<p>Lets see what this function returns when applied to a part of the gapminder data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calcGDP</span>(<span class="kw">head</span>(gapminder))</code></pre></div>
+<pre><code>## [1]  6567086330  7585448670  8758855797  9648014150  9678553274 11697659231</code></pre>
+<p>As we want our results to be more informative than the above, let's add some more arguments so we can extract per year and country GDP. We can also apply 1. defensive programming &amp; 2. default values for the arguments</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calcGDP &lt;-<span class="st"> </span><span class="cf">function</span>(dat, <span class="dt">year=</span><span class="ot">NULL</span>, <span class="dt">country=</span><span class="ot">NULL</span>) {
+    <span class="cf">if</span>(<span class="op">!</span><span class="kw">is.null</span>(year)) {
+        dat &lt;-<span class="st"> </span>dat[dat<span class="op">$</span>year <span class="op">%in%</span><span class="st"> </span>year, ]
+    }
+    <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(country)) {
+        dat &lt;-<span class="st"> </span>dat[dat<span class="op">$</span>country <span class="op">%in%</span><span class="st"> </span>country,]
+    }
+    gdp &lt;-<span class="st"> </span>dat<span class="op">$</span>pop <span class="op">*</span><span class="st"> </span>dat<span class="op">$</span>gdpPercap
+    
+    new &lt;-<span class="st"> </span><span class="kw">cbind</span>(dat, <span class="dt">gdp=</span>gdp)
+    <span class="co"># modified gapminder with a gdp column</span>
+    <span class="kw">return</span>(new)
+}</code></pre></div>
+<p>Explanation of what the function <code>calcGDP</code> does:</p>
+<ol style="list-style-type: lower-roman">
+<li>subsets the provided data by year if the year argument isn’t empty</li>
+<li>subsets the result by country if the country argument isn’t empty.</li>
+<li>calculates the GDP for the resultant subset</li>
+<li>adds the GDP as a new column to the subsetted data</li>
+<li>returns the subsetted data (if year or/and country was present in the input dataframe) with a gdp column added as the final result.</li>
+</ol>
+<p><strong>Note</strong>: Implementing defensive programming can make our functions more flexible for later use.</p>
+<p>We can use it to calculate the GDP for:</p>
+<ul>
+<li>The whole dataset;</li>
+<li>A single year;</li>
+<li>A single country;</li>
+<li>A single combination of year and country.</li>
+</ul>
+<p>By using %in% instead, we can also give multiple years or countries to those arguments. Please see help for <code>%in%</code> which we covered yesterday using the below functions:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">help</span>(<span class="st">&quot;%in%&quot;</span>)
+?<span class="st">&quot;%in%&quot;</span></code></pre></div>
+<p>Let’s take a look at what happens when we specify the year:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">calcGDP</span>(gapminder, <span class="dt">year =</span> <span class="dv">2007</span>))</code></pre></div>
+<pre><code>##        country year      pop continent lifeExp  gdpPercap       pop
+## 12 Afghanistan 2007 31889923      Asia  43.828   974.5803 31.889923
+## 24     Albania 2007  3600523    Europe  76.423  5937.0295  3.600523
+## 36     Algeria 2007 33333216    Africa  72.301  6223.3675 33.333216
+## 48      Angola 2007 12420476    Africa  42.731  4797.2313 12.420476
+## 60   Argentina 2007 40301927  Americas  75.320 12779.3796 40.301927
+## 72   Australia 2007 20434176   Oceania  81.235 34435.3674 20.434176
+##    pop_millions_2 pop_millions_3          gdp
+## 12      31.889923      31.889923  31079291949
+## 24       3.600523       3.600523  21376411360
+## 36      33.333216      33.333216 207444851958
+## 48      12.420476      12.420476  59583895818
+## 60      40.301927      40.301927 515033625357
+## 72      20.434176      20.434176 703658358894</code></pre>
+<p>Or for a specific country:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calcGDP</span>(gapminder, <span class="dt">country=</span><span class="st">&quot;Australia&quot;</span>)</code></pre></div>
+<pre><code>##      country year      pop continent lifeExp gdpPercap       pop
+## 61 Australia 1952  8691212   Oceania  69.120  10039.60  8.691212
+## 62 Australia 1957  9712569   Oceania  70.330  10949.65  9.712569
+## 63 Australia 1962 10794968   Oceania  70.930  12217.23 10.794968
+## 64 Australia 1967 11872264   Oceania  71.100  14526.12 11.872264
+## 65 Australia 1972 13177000   Oceania  71.930  16788.63 13.177000
+## 66 Australia 1977 14074100   Oceania  73.490  18334.20 14.074100
+## 67 Australia 1982 15184200   Oceania  74.740  19477.01 15.184200
+## 68 Australia 1987 16257249   Oceania  76.320  21888.89 16.257249
+## 69 Australia 1992 17481977   Oceania  77.560  23424.77 17.481977
+## 70 Australia 1997 18565243   Oceania  78.830  26997.94 18.565243
+## 71 Australia 2002 19546792   Oceania  80.370  30687.75 19.546792
+## 72 Australia 2007 20434176   Oceania  81.235  34435.37 20.434176
+##    pop_millions_2 pop_millions_3          gdp
+## 61       8.691212       8.691212  87256254102
+## 62       9.712569       9.712569 106349227169
+## 63      10.794968      10.794968 131884573002
+## 64      11.872264      11.872264 172457986742
+## 65      13.177000      13.177000 221223770658
+## 66      14.074100      14.074100 258037329175
+## 67      15.184200      15.184200 295742804309
+## 68      16.257249      16.257249 355853119294
+## 69      17.481977      17.481977 409511234952
+## 70      18.565243      18.565243 501223252921
+## 71      19.546792      19.546792 599847158654
+## 72      20.434176      20.434176 703658358894</code></pre>
+<p>Let's do Challenges 4 &amp; 5</p>
+<p>Reference: <a href="http://swcarpentry.github.io/r-novice-gapminder/10-functions/index.html" class="uri">http://swcarpentry.github.io/r-novice-gapminder/10-functions/index.html</a></p>
+</div>
+</div>
+<div id="challenge-4" class="section level2">
+<h2><span class="header-section-number">3.5</span> Challenge 4</h2>
+<p>Test out your GDP function by calculating the GDP for New Zealand in 1987. How does this differ from New Zealand’s GDP in 1952?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calcGDP</span>(gapminder, <span class="dt">year =</span> ..., <span class="dt">country =</span> ..)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># see if you get any results with these options. If you don&#39;t get results, can you tell why ?</span>
+<span class="kw">calcGDP</span>(gapminder, <span class="dt">year =</span> <span class="dv">1952</span>, <span class="dt">country =</span> <span class="st">&quot;Newzealand&quot;</span>)</code></pre></div>
+<pre><code>##  [1] country        year           pop            continent     
+##  [5] lifeExp        gdpPercap      pop_millions   pop_millions_2
+##  [9] pop_millions_3 gdp           
+## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calcGDP</span>(gapminder, <span class="dt">year =</span> <span class="dv">1952</span>, <span class="dt">country =</span> <span class="st">&quot;NewZealand&quot;</span>)</code></pre></div>
+<pre><code>##  [1] country        year           pop            continent     
+##  [5] lifeExp        gdpPercap      pop_millions   pop_millions_2
+##  [9] pop_millions_3 gdp           
+## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calcGDP</span>(gapminder, <span class="dt">year =</span> <span class="dv">1952</span>, <span class="dt">country =</span> <span class="st">&quot;New Zealand&quot;</span>)</code></pre></div>
+<pre><code>##          country year     pop continent lifeExp gdpPercap      pop
+## 1093 New Zealand 1952 1994794   Oceania   69.39  10556.58 1.994794
+##      pop_millions_2 pop_millions_3         gdp
+## 1093       1.994794       1.994794 21058193787</code></pre>
+</div>
+<div id="challenge-5" class="section level2">
+<h2><span class="header-section-number">3.6</span> Challenge 5</h2>
+<p>Write a function called fence() that takes two vectors as arguments, called text and wrapper, and prints out the text wrapped with the wrapper:</p>
+<p>The paste() function, we learned yesterday, can be used to combine text together. See below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">best_practice &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Write&quot;</span>, <span class="st">&quot;programs&quot;</span>, <span class="st">&quot;for&quot;</span>, <span class="st">&quot;people&quot;</span>, <span class="st">&quot;not&quot;</span>, <span class="st">&quot;computers&quot;</span>)
+<span class="kw">paste</span>(best_practice, <span class="dt">collapse=</span><span class="st">&quot; &quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;Write programs for people not computers&quot;</code></pre>
+<p>Let the argument <code>text</code> be <code>best_practice</code> and <code>wrapper</code> be <code>****</code>. The frame for the function is given below. You can try completing this.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fence &lt;-<span class="st"> </span><span class="cf">function</span>(text, wrapper){
+    ...
+    ....
+    <span class="kw">return</span>(result)
+}
+<span class="co"># calling the function</span>
+<span class="kw">fence</span>(<span class="dt">text=</span>.., <span class="dt">wrapper=</span>..)</code></pre></div>
+<p><strong>Solution</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fence &lt;-<span class="st"> </span><span class="cf">function</span>(text, wrapper){
+    text &lt;-<span class="st"> </span><span class="kw">c</span>(wrapper, text, wrapper)
+    result &lt;-<span class="st"> </span><span class="kw">paste</span>(text, <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)
+    <span class="kw">return</span>(result)
+}
+
+best_practice &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Write&quot;</span>, <span class="st">&quot;programs&quot;</span>, <span class="st">&quot;for&quot;</span>, <span class="st">&quot;people&quot;</span>, <span class="st">&quot;not&quot;</span>, <span class="st">&quot;computers&quot;</span>)
+<span class="kw">fence</span>(<span class="dt">text=</span>best_practice, <span class="dt">wrapper=</span><span class="st">&quot;***&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;*** Write programs for people not computers ***&quot;</code></pre>
+</div>
+<div id="how-to-use-functions-for-later-analyses" class="section level2">
+<h2><span class="header-section-number">3.7</span> How to use functions for later analyses</h2>
+<ol style="list-style-type: decimal">
+<li>Save functions to a file: e.g.: &quot;functions.R&quot;</li>
+<li>Use it in another R script by using the <code>source()</code> function
+<ul>
+<li><code>source(&quot;~/functions/functions.R&quot;)</code></li>
+</ul></li>
+</ol>
+</div>
+<div id="other-important-concepts" class="section level2">
+<h2><span class="header-section-number">3.8</span> Other important concepts</h2>
+<ul>
+<li>Pass by value</li>
+<li>Function scope</li>
+<li>Testing and documenting</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="vectorization.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="saving-plots-and-writing-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["SWC-R-workshop-USDA.pdf", "SWC-R-workshop-USDA.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

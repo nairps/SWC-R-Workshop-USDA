@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Vectorization | SWC R Workshop @ USDA: Notes and Code</title>
+  <meta name="description" content="This is a supplementary note for the SWC worshop at the USDA. The output format is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Vectorization | SWC R Workshop @ USDA: Notes and Code" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a supplementary note for the SWC worshop at the USDA. The output format is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Vectorization | SWC R Workshop @ USDA: Notes and Code" />
+  
+  <meta name="twitter:description" content="This is a supplementary note for the SWC worshop at the USDA. The output format is bookdown::gitbook." />
+  
+
+<meta name="author" content="Preethy Nair" />
+
+
+<meta name="date" content="2020-07-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="functions.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R Workshop USDA: Workshop Notes and Codes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Information</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="vectorization.html"><a href="vectorization.html"><i class="fa fa-check"></i><b>2</b> Vectorization</a><ul>
+<li class="chapter" data-level="2.1" data-path="vectorization.html"><a href="vectorization.html#structure-of-a-for-loop"><i class="fa fa-check"></i><b>2.1</b> Structure of a <code>for()</code> loop</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>3</b> Functions</a><ul>
+<li class="chapter" data-level="3.1" data-path="functions.html"><a href="functions.html#components-of-a-function"><i class="fa fa-check"></i><b>3.1</b> Components of a function</a></li>
+<li class="chapter" data-level="3.2" data-path="functions.html"><a href="functions.html#challenge-1"><i class="fa fa-check"></i><b>3.2</b> Challenge 1</a></li>
+<li class="chapter" data-level="3.3" data-path="functions.html"><a href="functions.html#combining-functions"><i class="fa fa-check"></i><b>3.3</b> Combining functions</a></li>
+<li class="chapter" data-level="3.4" data-path="functions.html"><a href="functions.html#defensive-programming"><i class="fa fa-check"></i><b>3.4</b> Defensive Programming</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="functions.html"><a href="functions.html#case-1-functions-with-one-argument"><i class="fa fa-check"></i><b>3.4.1</b> Case 1: Functions with one argument</a></li>
+<li class="chapter" data-level="3.4.2" data-path="functions.html"><a href="functions.html#case-2-multiple-arguments-or-conditions"><i class="fa fa-check"></i><b>3.4.2</b> Case 2: Multiple arguments or conditions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="functions.html"><a href="functions.html#challenge-4"><i class="fa fa-check"></i><b>3.5</b> Challenge 4</a></li>
+<li class="chapter" data-level="3.6" data-path="functions.html"><a href="functions.html#challenge-5"><i class="fa fa-check"></i><b>3.6</b> Challenge 5</a></li>
+<li class="chapter" data-level="3.7" data-path="functions.html"><a href="functions.html#how-to-use-functions-for-later-analyses"><i class="fa fa-check"></i><b>3.7</b> How to use functions for later analyses</a></li>
+<li class="chapter" data-level="3.8" data-path="functions.html"><a href="functions.html#other-important-concepts"><i class="fa fa-check"></i><b>3.8</b> Other important concepts</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="saving-plots-and-writing-data.html"><a href="saving-plots-and-writing-data.html"><i class="fa fa-check"></i><b>4</b> Saving plots and Writing data</a><ul>
+<li class="chapter" data-level="4.1" data-path="saving-plots-and-writing-data.html"><a href="saving-plots-and-writing-data.html#saving-plots-in-rstudio"><i class="fa fa-check"></i><b>4.1</b> Saving plots in RStudio</a></li>
+<li class="chapter" data-level="4.2" data-path="saving-plots-and-writing-data.html"><a href="saving-plots-and-writing-data.html#writing-table"><i class="fa fa-check"></i><b>4.2</b> Writing Table</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dplyr.html"><a href="dplyr.html"><i class="fa fa-check"></i><b>5</b> <code>dplyr</code></a></li>
+<li class="chapter" data-level="6" data-path="producing-reports-with-knitr.html"><a href="producing-reports-with-knitr.html"><i class="fa fa-check"></i><b>6</b> Producing Reports With knitr</a><ul>
+<li class="chapter" data-level="6.0.1" data-path="producing-reports-with-knitr.html"><a href="producing-reports-with-knitr.html#adding-citation"><i class="fa fa-check"></i><b>6.0.1</b> Adding Citation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SWC R Workshop @ USDA: Notes and Code</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="vectorization" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Vectorization</h1>
+<p>Most of R's functions are vectorized.</p>
+<ul>
+<li>These functions will operate on all elements of a vector at once</li>
+<li>No need to loop through and act on each element one at a time</li>
+</ul>
+<p><strong>Advantages of vectorisation</strong> We can write code that is:</p>
+<ul>
+<li>concise</li>
+<li>easy to read and</li>
+<li>less error prone.</li>
+</ul>
+<p>e.g.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>
+x</code></pre></div>
+<pre><code>## [1] 1 2 3 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">*</span><span class="st"> </span><span class="dv">2</span>   </code></pre></div>
+<pre><code>## [1] 2 4 6 8</code></pre>
+<p>Above, each element of the vector was multiplied by 2.<br />
+Lets see how vectorisation works while adding two vectors in <code>R</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="dv">6</span><span class="op">:</span><span class="dv">9</span>
+y</code></pre></div>
+<pre><code>## [1] 6 7 8 9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">+</span><span class="st"> </span>y</code></pre></div>
+<pre><code>## [1]  7  9 11 13</code></pre>
+<p>Here, each element of <code>x</code> was added to its corresponding element of <code>y</code>. Lets see that again:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x; y; x<span class="op">+</span>y</code></pre></div>
+<pre><code>## [1] 1 2 3 4</code></pre>
+<pre><code>## [1] 6 7 8 9</code></pre>
+<pre><code>## [1]  7  9 11 13</code></pre>
+<p>Another way to implement vectorisation while adding two vectors together is by using a <code>for</code> loop.</p>
+<div id="structure-of-a-for-loop" class="section level2">
+<h2><span class="header-section-number">2.1</span> Structure of a <code>for()</code> loop</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (iterator <span class="cf">in</span> set_of_values) {
+         do a thing
+     } </code></pre></div>
+<ul>
+<li>indentation is not important in R compared to Shell and Python</li>
+<li>but its a good practice to use indentation</li>
+</ul>
+<p><strong>Uses of for() loop</strong></p>
+<ul>
+<li>repeating operations</li>
+</ul>
+<p><strong>Example of a for loop</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) {
+    <span class="kw">print</span>(i)
+}</code></pre></div>
+<pre><code>## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5
+## [1] 6
+## [1] 7
+## [1] 8
+## [1] 9
+## [1] 10</code></pre>
+<p><code>for()</code> loop is good for iterating over a set of values, when the order of iteration is important. We saw <code>for()</code> loop yesterday.</p>
+<p>Its good to learn for() loops, but avoid using for() loops unless the order of iteration is important.</p>
+<p>Here's an example of a for loop that does vector addition.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x</code></pre></div>
+<pre><code>## [1] 1 2 3 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y</code></pre></div>
+<pre><code>## [1] 6 7 8 9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#vectorisation using for loop</span>
+output_vector &lt;-<span class="st"> </span><span class="kw">c</span>()
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) {
+    output_vector[i] &lt;-<span class="st"> </span>x[i] <span class="op">+</span><span class="st"> </span>y[i]
+}
+output_vector</code></pre></div>
+<pre><code>## [1]  7  9 11 13</code></pre>
+<p>Compare this to the output using vectorised operations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x</code></pre></div>
+<pre><code>## [1] 1 2 3 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y</code></pre></div>
+<pre><code>## [1] 6 7 8 9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sum_xy &lt;-<span class="st"> </span>x <span class="op">+</span><span class="st"> </span>y
+sum_xy</code></pre></div>
+<pre><code>## [1]  7  9 11 13</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">identical</span>(output_vector, sum_xy)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Both are identical.</p>
+<p>Let's try Vectorisation in gapminder data. Let's load the gapminder data that we used yesterday in the first part of our R lesson.</p>
+<p>You can clear your environment for a fresh start by removing all the objects using the below command.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</code></pre></div>
+<p>Please import the <code>gapminder</code> data to your <code>RStudio</code> environment. If you do not have the <code>gapminder</code> loaded into your RStudio session, you can do it using the below code chunk. This code chunk is also provided in the <a href="https://pad.carpentries.org/2020-07-22-usda-online">collaborative document</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># loading data using a link</span>
+gapminder &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/gh-pages/_episodes_rmd/data/gapminder_data.csv&quot;</span>, <span class="dt">stringsAsFactors=</span><span class="ot">FALSE</span>)
+
+<span class="co"># if the gapminder is already in your data folder</span>
+<span class="co"># you can load it using the below code:</span>
+<span class="co">#gapminder &lt;- read.csv(&quot;data/gapminder_data.csv&quot;, stringsAsFactors=FALSE)</span></code></pre></div>
+<p>Examine the gapminder dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(gapminder)  <span class="co"># shows the first few rows of the dataset</span></code></pre></div>
+<pre><code>##       country year      pop continent lifeExp gdpPercap
+## 1 Afghanistan 1952  8425333      Asia  28.801  779.4453
+## 2 Afghanistan 1957  9240934      Asia  30.332  820.8530
+## 3 Afghanistan 1962 10267083      Asia  31.997  853.1007
+## 4 Afghanistan 1967 11537966      Asia  34.020  836.1971
+## 5 Afghanistan 1972 13079460      Asia  36.088  739.9811
+## 6 Afghanistan 1977 14880372      Asia  38.438  786.1134</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(gapminder)  <span class="co"># shows the last few rows of the dataset</span></code></pre></div>
+<pre><code>##       country year      pop continent lifeExp gdpPercap
+## 1699 Zimbabwe 1982  7636524    Africa  60.363  788.8550
+## 1700 Zimbabwe 1987  9216418    Africa  62.351  706.1573
+## 1701 Zimbabwe 1992 10704340    Africa  60.377  693.4208
+## 1702 Zimbabwe 1997 11404948    Africa  46.809  792.4500
+## 1703 Zimbabwe 2002 11926563    Africa  39.989  672.0386
+## 1704 Zimbabwe 2007 12311143    Africa  43.487  469.7093</code></pre>
+<p>Lets try vectorisation on the <code>pop</code> column of the <code>gapminder</code> dataset.</p>
+<ol style="list-style-type: decimal">
+<li><p>Make a new column in the <code>gapminder</code> data frame that contains population in units of millions of people.</p></li>
+<li><p>Check the head or tail of the data frame to make sure it worked.</p></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder<span class="op">$</span>pop_millions &lt;-<span class="st"> </span>gapminder[<span class="st">&quot;pop&quot;</span>] <span class="op">/</span><span class="st"> </span><span class="fl">1e6</span>
+<span class="co">#or</span>
+gapminder<span class="op">$</span>pop_millions_<span class="dv">2</span> &lt;-<span class="st"> </span>gapminder<span class="op">$</span>pop <span class="op">/</span><span class="st"> </span><span class="fl">1e6</span>
+<span class="co"># or</span>
+gapminder[<span class="st">&quot;pop_millions_3&quot;</span>] &lt;-<span class="st"> </span>gapminder<span class="op">$</span>pop <span class="op">/</span><span class="st"> </span><span class="fl">1e6</span></code></pre></div>
+<p>Check the head or tail of the data frame to make sure it worked.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(gapminder)</code></pre></div>
+<pre><code>##       country year      pop continent lifeExp gdpPercap       pop
+## 1 Afghanistan 1952  8425333      Asia  28.801  779.4453  8.425333
+## 2 Afghanistan 1957  9240934      Asia  30.332  820.8530  9.240934
+## 3 Afghanistan 1962 10267083      Asia  31.997  853.1007 10.267083
+## 4 Afghanistan 1967 11537966      Asia  34.020  836.1971 11.537966
+## 5 Afghanistan 1972 13079460      Asia  36.088  739.9811 13.079460
+## 6 Afghanistan 1977 14880372      Asia  38.438  786.1134 14.880372
+##   pop_millions_2 pop_millions_3
+## 1       8.425333       8.425333
+## 2       9.240934       9.240934
+## 3      10.267083      10.267083
+## 4      11.537966      11.537966
+## 5      13.079460      13.079460
+## 6      14.880372      14.880372</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check if both the created variables are identical or not</span>
+<span class="co"># using the R function identical()</span>
+<span class="kw">identical</span>(gapminder<span class="op">$</span>pop_millions, gapminder<span class="op">$</span>pop_millions_<span class="dv">2</span> )</code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>In addition to mathematical operators, Comparison operators, logical operators &amp; many functions are also vectorized:</p>
+<p>Let's see the <strong>Comparison operators</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">6</span>
+x</code></pre></div>
+<pre><code>## [1] 0 1 2 3 4 5 6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span> </code></pre></div>
+<pre><code>## [1] FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<p><strong>Logical operators</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span>x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>  <span class="co"># or, for clarity, a &lt;- (x &gt; 3)</span>
+a</code></pre></div>
+<pre><code>## [1] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE</code></pre>
+<p><strong>Functions</strong> <code>log()</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x</code></pre></div>
+<pre><code>## [1] 0 1 2 3 4 5 6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span>
+x</code></pre></div>
+<pre><code>## [1] 1 2 3 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(x)</code></pre></div>
+<pre><code>## [1] 0.0000000 0.6931472 1.0986123 1.3862944</code></pre>
+<p><strong>Vectorisation in matrices</strong> Vectorized operations work element-wise on matrices.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">nrow=</span><span class="dv">3</span>, <span class="dt">ncol=</span><span class="dv">4</span>)
+m</code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    4    7   10
+## [2,]    2    5    8   11
+## [3,]    3    6    9   12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m <span class="op">*</span><span class="st"> </span><span class="op">-</span><span class="dv">1</span> <span class="co"># element wise operation</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]   -1   -4   -7  -10
+## [2,]   -2   -5   -8  -11
+## [3,]   -3   -6   -9  -12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m</code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    4    7   10
+## [2,]    2    5    8   11
+## [3,]    3    6    9   12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m <span class="op">^</span><span class="st"> </span><span class="op">-</span><span class="dv">1</span> <span class="co"># element wise operation</span></code></pre></div>
+<pre><code>##           [,1]      [,2]      [,3]       [,4]
+## [1,] 1.0000000 0.2500000 0.1428571 0.10000000
+## [2,] 0.5000000 0.2000000 0.1250000 0.09090909
+## [3,] 0.3333333 0.1666667 0.1111111 0.08333333</code></pre>
+<p><strong>Very important:</strong></p>
+<ul>
+<li>the operator <code>*</code> = &gt; element-wise multiplication</li>
+<li>for matrix multiplication, use the <code>%*%</code> operator</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m</code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    4    7   10
+## [2,]    2    5    8   11
+## [3,]    3    6    9   12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrix</span>(<span class="dv">1</span>, <span class="dt">nrow=</span><span class="dv">4</span>, <span class="dt">ncol=</span><span class="dv">1</span>)</code></pre></div>
+<pre><code>##      [,1]
+## [1,]    1
+## [2,]    1
+## [3,]    1
+## [4,]    1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m <span class="op">%*%</span><span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span>, <span class="dt">nrow=</span><span class="dv">4</span>, <span class="dt">ncol=</span><span class="dv">1</span>)</code></pre></div>
+<pre><code>##      [,1]
+## [1,]   22
+## [2,]   26
+## [3,]   30</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">nrow=</span><span class="dv">1</span>) <span class="co">#row matrix</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    2    3    4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">nrow=</span><span class="dv">1</span>) <span class="op">%*%</span><span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">ncol=</span><span class="dv">1</span>)</code></pre></div>
+<pre><code>##      [,1]
+## [1,]   30</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="functions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["SWC-R-workshop-USDA.pdf", "SWC-R-workshop-USDA.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
